@@ -1,7 +1,6 @@
 package cz.cvut.fit.mi_paa.knapsack;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.management.ManagementFactory;
@@ -11,22 +10,20 @@ import java.util.List;
 public class KnapsackRunner {
 
 	public static void main(String[] args) {
-		printCpuTime();
+		long start = getCpuTime();
 		try {
 			KnapsackReader kr = getKnapsackReader(args[0]);
 			solveKnapsack(kr);
 		} catch (Exception e) {
 			help(e.getMessage());
+			e.printStackTrace();
 		} finally {
-			printCpuTime();
+			System.out.printf("Operation took %.2f CPU s", (getCpuTime() - start) / 1000000000D);
 		}
 
 	}
 
 	private static KnapsackReader getKnapsackReader(String path) throws FileNotFoundException {
-		File file = new File(path);
-		System.out.println(file.getAbsolutePath());
-
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		return new KnapsackReader(br);
 	}
@@ -49,8 +46,8 @@ public class KnapsackRunner {
 	}
 
 	@SuppressWarnings("restriction")
-	private static void printCpuTime() {
-		System.out.println(((com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean())
-				.getProcessCpuTime());
+	private static long getCpuTime() {
+		return ((com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean())
+				.getProcessCpuTime();
 	}
 }

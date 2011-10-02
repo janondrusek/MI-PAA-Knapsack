@@ -15,12 +15,16 @@ public class KnapsackReader implements Iterator<Knapsack> {
 
 	@Override
 	public boolean hasNext() {
+		boolean next = true;
 		try {
 			line = br.readLine();
+			if (line.trim().length() <= 0) {
+				next = false;
+			}
 		} catch (Exception e) {
-			return false;
+			next = false;
 		}
-		return true;
+		return next;
 	}
 
 	@Override
