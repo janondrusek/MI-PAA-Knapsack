@@ -10,7 +10,8 @@ import java.util.List;
 public class KnapsackRunner {
 
 	public static void main(String[] args) {
-		long start = getCpuTime();
+		long startCpu = getCpuTime();
+		long startTimestamp = System.currentTimeMillis();
 		try {
 			KnapsackReader kr = getKnapsackReader(args[0]);
 			solveKnapsack(kr);
@@ -18,9 +19,9 @@ public class KnapsackRunner {
 			help(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.printf("Operation took %.2f CPU s", (getCpuTime() - start) / 1000000000D);
+			System.out.printf("Operation took %.2f CPU s, real: %.2f s%n", (getCpuTime() - startCpu) / 1000000000D,
+					(System.currentTimeMillis() - startTimestamp) / 1000D);
 		}
-
 	}
 
 	private static KnapsackReader getKnapsackReader(String path) throws FileNotFoundException {
@@ -36,6 +37,7 @@ public class KnapsackRunner {
 			knapsack.solveRatioHeuristic();
 
 			knapsacks.add(knapsack);
+			System.out.print(knapsack);
 		}
 	}
 
