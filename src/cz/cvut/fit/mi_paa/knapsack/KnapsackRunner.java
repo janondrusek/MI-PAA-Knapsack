@@ -19,8 +19,7 @@ public class KnapsackRunner {
 			help(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			System.out.printf("Operation took %.2f CPU s, real: %.2f s%n", (getCpuTime() - startCpu) / 1000000000D,
-					(System.currentTimeMillis() - startTimestamp) / 1000D);
+			printTimeInfo("Total operation", startCpu, startTimestamp);
 		}
 	}
 
@@ -30,15 +29,27 @@ public class KnapsackRunner {
 	}
 
 	private static void solveKnapsack(KnapsackReader kr) {
+		long startCpu = getCpuTime();
+		long startTimestamp = System.currentTimeMillis();
+
 		List<Knapsack> knapsacks = new ArrayList<>();
 		while (kr.hasNext()) {
 			Knapsack knapsack = kr.next();
 			knapsack.solveBruteForce();
-			knapsack.solveRatioHeuristic();
 
 			knapsacks.add(knapsack);
+		}
+		printTimeInfo("Brute-force", startCpu, startTimestamp);
+
+		startCpu = getCpuTime();
+		startTimestamp = System.currentTimeMillis();
+
+		for (Knapsack knapsack : knapsacks) {
+			knapsack.solveRatioHeuristic();
 			System.out.print(knapsack);
 		}
+
+		printTimeInfo("Heuristic", startCpu, startTimestamp);
 	}
 
 	private static void help(String message) {
@@ -51,5 +62,10 @@ public class KnapsackRunner {
 	private static long getCpuTime() {
 		return ((com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean())
 				.getProcessCpuTime();
+	}
+
+	private static void printTimeInfo(String operationName, long startCpu, long startTimestamp) {
+		System.out.printf("%s took %.2f CPU s, real: %.2f s%n", operationName, (getCpuTime() - startCpu) / 1000000000D,
+				(System.currentTimeMillis() - startTimestamp) / 1000D);
 	}
 }
