@@ -113,10 +113,11 @@ public class Knapsack {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"ID: %d, best brute-force: %s, brute-force sum: %d, best heuristic: %s, heuristic sum: %d%n", getId(),
-				getBruteForceResult().getItems(), getBruteForceResult().getValue(), getRatioHeuristicResult()
-						.getItems(), getRatioHeuristicResult().getValue());
+		return String
+				.format("ID: %d, best brute-force: %s, brute-force sum: %d, best heuristic: %s, heuristic sum: %d, relative deviation: %.2f%%%n",
+						getId(), getBruteForceResult().getItems(), getBruteForceResult().getValue(),
+						getRatioHeuristicResult().getItems(), getRatioHeuristicResult().getValue(),
+						getRelativeDeviation() * 100);
 	}
 
 	public BruteForceResult getBruteForceResult() {
@@ -125,6 +126,11 @@ public class Knapsack {
 
 	public RatioHeuristicResult getRatioHeuristicResult() {
 		return ratioHeuristicResult;
+	}
+
+	public double getRelativeDeviation() {
+		return (double) (getBruteForceResult().getValue() - getRatioHeuristicResult().getValue())
+				/ (double) getBruteForceResult().getValue();
 	}
 
 }

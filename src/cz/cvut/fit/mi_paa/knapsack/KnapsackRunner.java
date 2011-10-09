@@ -44,12 +44,14 @@ public class KnapsackRunner {
 		startCpu = getCpuTime();
 		startTimestamp = System.currentTimeMillis();
 
+		double relativeDevationSum = 0;
 		for (Knapsack knapsack : knapsacks) {
 			knapsack.solveRatioHeuristic();
+			relativeDevationSum += knapsack.getRelativeDeviation();
 			System.out.print(knapsack);
 		}
-
 		printTimeInfo("Heuristic", startCpu, startTimestamp);
+		System.out.printf("Avg. relative deviation is %.2f%%%n", relativeDevationSum / knapsacks.size() * 100);
 	}
 
 	private static void help(String message) {
