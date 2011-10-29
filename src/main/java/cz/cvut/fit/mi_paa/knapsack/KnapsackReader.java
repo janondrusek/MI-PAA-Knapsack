@@ -7,7 +7,7 @@ public class KnapsackReader implements Iterator<Knapsack> {
 
 	private BufferedReader br;
 
-	String line;
+	private String line;
 
 	public KnapsackReader(BufferedReader br) {
 		this.br = br;

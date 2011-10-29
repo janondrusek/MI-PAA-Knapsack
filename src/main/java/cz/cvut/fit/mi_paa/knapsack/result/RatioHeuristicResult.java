@@ -20,4 +20,10 @@ public class RatioHeuristicResult extends Result {
 		return StringUtils.join(indices);
 	}
 
+	// public double getRelativeDeviation() {
+	// return (double) (getBruteForceResult().getValue() -
+	// getRatioHeuristicResult().getValue())
+	// / (double) getBruteForceResult().getValue();
+	// }
+
 }

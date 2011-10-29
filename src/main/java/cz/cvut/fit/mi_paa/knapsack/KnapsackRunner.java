@@ -7,6 +7,13 @@ import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.ClassUtils;
+
+import cz.cvut.fit.mi_paa.knapsack.resolver.BranchAndBoundResolver;
+import cz.cvut.fit.mi_paa.knapsack.resolver.BruteForceResolver;
+import cz.cvut.fit.mi_paa.knapsack.resolver.Resolver;
+import cz.cvut.fit.mi_paa.knapsack.result.Result;
+
 public class KnapsackRunner {
 
 	public static void main(String[] args) {
@@ -29,29 +36,23 @@ public class KnapsackRunner {
 	}
 
 	private static void solveKnapsack(KnapsackReader kr) {
-		long startCpu = getCpuTime();
-		long startTimestamp = System.currentTimeMillis();
-
 		List<Knapsack> knapsacks = new ArrayList<>();
 		while (kr.hasNext()) {
 			Knapsack knapsack = kr.next();
-			knapsack.solveBruteForce();
-
 			knapsacks.add(knapsack);
 		}
-		printTimeInfo("Brute-force", startCpu, startTimestamp);
 
-		startCpu = getCpuTime();
-		startTimestamp = System.currentTimeMillis();
-
-		double relativeDevationSum = 0;
-		for (Knapsack knapsack : knapsacks) {
-			knapsack.solveRatioHeuristic();
-			relativeDevationSum += knapsack.getRelativeDeviation();
-			System.out.print(knapsack);
+		Resolver[] resolvers = new Resolver[] { new BruteForceResolver(), new BranchAndBoundResolver() };
+		for (Resolver resolver : resolvers) {
+			long startCpu = getCpuTime();
+			long startTimestamp = System.currentTimeMillis();
+			for (Knapsack knapsack : knapsacks) {
+				Result result = resolver.solve(knapsack);
+				System.out.println(result);
+			}
+			printTimeInfo(ClassUtils.getShortClassName(resolver.getClass()), startCpu, startTimestamp);
 		}
-		printTimeInfo("Heuristic", startCpu, startTimestamp);
-		System.out.printf("Avg. relative deviation is %.2f%%%n", relativeDevationSum / knapsacks.size() * 100);
+
 	}
 
 	private static void help(String message) {
@@ -60,7 +61,6 @@ public class KnapsackRunner {
 				+ KnapsackRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath() + " datafile.txt");
 	}
 
-	@SuppressWarnings("restriction")
 	private static long getCpuTime() {
 		return ((com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean())
 				.getProcessCpuTime();

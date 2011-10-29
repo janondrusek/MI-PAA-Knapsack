@@ -1,12 +1,10 @@
 package cz.cvut.fit.mi_paa.knapsack.result;
 
+import org.apache.commons.lang3.ClassUtils;
+
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 
 abstract public class Result {
-
-	private long startTime;
-
-	private long endTime;
 
 	private Knapsack knapsack;
 
@@ -15,30 +13,6 @@ abstract public class Result {
 	protected Result(Knapsack knapsack) {
 		super();
 		this.knapsack = knapsack;
-	}
-
-	public void start() {
-		startTime = getTimestamp();
-	}
-
-	public void end() {
-		endTime = getTimestamp();
-	}
-
-	private long getTimestamp() {
-		return System.currentTimeMillis();
-	}
-
-	public long getRunningTime() {
-		return getEndTime() - getStartTime();
-	}
-
-	private long getStartTime() {
-		return startTime;
-	}
-
-	private long getEndTime() {
-		return endTime;
 	}
 
 	public int getValue() {
@@ -54,5 +28,19 @@ abstract public class Result {
 	}
 
 	abstract public String getItems();
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		sb.append(getKnapsack());
+		sb.append(", ");
+		sb.append(ClassUtils.getShortClassName(getClass()));
+		sb.append("[");
+		sb.append("value: ");
+		sb.append(getValue());
+		sb.append("]]");
+		return sb.toString();
+	}
 
 }
