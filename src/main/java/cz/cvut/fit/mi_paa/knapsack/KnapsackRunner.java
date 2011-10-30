@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.ClassUtils;
 
-import cz.cvut.fit.mi_paa.knapsack.resolver.BranchAndBoundResolver;
+import cz.cvut.fit.mi_paa.knapsack.resolver.DynamicProgramminCapacityResolver;
 import cz.cvut.fit.mi_paa.knapsack.resolver.Resolver;
 import cz.cvut.fit.mi_paa.knapsack.result.Result;
 
@@ -41,7 +41,7 @@ public class KnapsackRunner {
 			knapsacks.add(knapsack);
 		}
 
-		Resolver[] resolvers = new Resolver[] { new BranchAndBoundResolver() };
+		Resolver[] resolvers = new Resolver[] { new DynamicProgramminCapacityResolver() };
 		for (Resolver resolver : resolvers) {
 			long startCpu = getCpuTime();
 			long startTimestamp = System.currentTimeMillis();
