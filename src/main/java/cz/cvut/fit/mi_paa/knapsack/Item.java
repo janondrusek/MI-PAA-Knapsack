@@ -1,21 +1,26 @@
 package cz.cvut.fit.mi_paa.knapsack;
 
-public class Item implements Comparable<Item> {
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+public class Item implements Cloneable {
 
 	private int index;
-
-	private boolean testedInHeuristic;
-
-	private boolean usedInHeuristic;
 
 	private int value;
 
 	private int weight;
 
+	private boolean used;
+
 	public Item(int index, int weight, int value) {
 		this.index = index;
 		this.weight = weight;
 		this.value = value;
+	}
+
+	private Item(Item item) {
+		this(item.getIndex(), item.getWeight(), item.getValue());
+		setUsed(item.isUsed());
 	}
 
 	public int getIndex() {
@@ -34,40 +39,22 @@ public class Item implements Comparable<Item> {
 		return value;
 	}
 
-	public double getRatio() {
-		if (getValue() <= 0) {
-			return 0;
-		}
-		return getValue() / getWeight();
+	public boolean isUsed() {
+		return used;
+	}
+
+	public void setUsed(boolean used) {
+		this.used = used;
 	}
 
 	@Override
-	public int compareTo(Item item) {
-		double ratio = getRatio();
-		double itemRatio = item.getRatio();
-		if (ratio == itemRatio) {
-			return 0;
-		}
-		if (ratio < itemRatio) {
-			return -1;
-		}
-		return 1;
+	protected Item clone() {
+		return new Item(this);
 	}
 
-	public void setUsedInHeuristic(boolean used) {
-		this.usedInHeuristic = used;
-	}
-
-	public boolean isUsedInHeuristic() {
-		return usedInHeuristic;
-	}
-
-	public void setTestedInHeuristic(boolean testedInHeuristic) {
-		this.testedInHeuristic = testedInHeuristic;
-	}
-
-	public boolean isTestedInHeuristic() {
-		return testedInHeuristic;
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this);
 	}
 
 }
