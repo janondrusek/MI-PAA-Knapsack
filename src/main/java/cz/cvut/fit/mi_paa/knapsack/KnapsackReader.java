@@ -20,6 +20,11 @@ public class KnapsackReader implements Iterator<Knapsack> {
 			line = br.readLine();
 			if (line.trim().length() <= 0) {
 				next = false;
+				try {
+					br.close();
+				} catch (Exception e) {
+
+				}
 			}
 		} catch (Exception e) {
 			next = false;

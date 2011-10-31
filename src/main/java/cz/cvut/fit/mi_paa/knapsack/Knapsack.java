@@ -1,11 +1,12 @@
 package cz.cvut.fit.mi_paa.knapsack;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 public final class Knapsack implements Cloneable {
 
 	private int id;
+
+	private int limit;
 
 	private int maxWeight;
 
@@ -14,21 +15,22 @@ public final class Knapsack implements Cloneable {
 	private Item[] items;
 
 	private Knapsack(Knapsack knapsack, Item[] items) {
-		this(knapsack.getId(), knapsack.getNumOfItems(), knapsack.getMaxWeight(), items);
+		this(knapsack.getId(), knapsack.getNumOfItems(), knapsack.getMaxWeight(), knapsack.getLimit(), items);
 	}
 
 	public Knapsack(String[] chunks) {
-		this(NumberUtils.toInt(chunks[0]), NumberUtils.toInt(chunks[1]), NumberUtils.toInt(chunks[2]), chunks);
+		this(NumberUtils.toInt(chunks[0]), NumberUtils.toInt(chunks[1]), NumberUtils.toInt(chunks[2]), -1, chunks);
 	}
 
-	private Knapsack(int id, int numOfItems, int maxWeight, String[] chunks) {
-		this(id, numOfItems, maxWeight, getItems(chunks, numOfItems));
+	private Knapsack(int id, int numOfItems, int maxWeight, int limit, String[] chunks) {
+		this(id, numOfItems, maxWeight, limit, getItems(chunks, numOfItems));
 	}
 
-	private Knapsack(int id, int numOfItems, int maxWeight, Item[] items) {
+	private Knapsack(int id, int numOfItems, int maxWeight, int limit, Item[] items) {
 		this.id = id;
 		this.numOfItems = numOfItems;
 		this.maxWeight = maxWeight;
+		this.limit = limit;
 		this.items = items;
 	}
 
@@ -99,12 +101,12 @@ public final class Knapsack implements Cloneable {
 		return new Knapsack(this, items);
 	}
 
-	public String getIdentifier() {
-		String[] used = new String[getNumOfItems()];
+	public Long getIdentifier() {
+		long identifier = 0;
 		for (int i = 0; i < getNumOfItems(); i++) {
-			used[getItems()[i].getIndex()] = getItems()[i].isUsed() ? "1" : "0";
+			identifier += i * 10 * (getItems()[i].isUsed() ? 1 : 0);
 		}
-		return StringUtils.join(used);
+		return new Long(identifier);
 	}
 
 	public void removeItem(int index) {
@@ -119,6 +121,14 @@ public final class Knapsack implements Cloneable {
 			}
 		}
 		return numOfUsed;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 
 }

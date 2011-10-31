@@ -9,7 +9,8 @@ public class BruteForceResolver extends AbstractResolver {
 	@Override
 	public Result solve(Knapsack knapsack) {
 		BruteForceResult bruteForceResult = new BruteForceResult(knapsack);
-		for (int i = 0; i < getStackSize(knapsack); i++) {
+		long stackSize = getStackSize(knapsack);
+		for (int i = 0; i < stackSize; i++) {
 			int sumValues = 0;
 			int sumWeights = 0;
 			int shift = i;

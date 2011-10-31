@@ -4,11 +4,9 @@ import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.result.DynamicProgrammingCapacityResult;
 import cz.cvut.fit.mi_paa.knapsack.result.Result;
 
-public class DynamicProgramminCapacityResolver extends AbstractResolver {
+public class DynamicProgrammingCapacityResolver extends AbstractResolver {
 
 	private DynamicProgrammingCapacityResult result;
-
-	private Knapsack original;
 
 	private int[] weights;
 	private int[] values;
@@ -69,11 +67,4 @@ public class DynamicProgramminCapacityResolver extends AbstractResolver {
 		return used;
 	}
 
-	private Knapsack getOriginal() {
-		return original;
-	}
-
-	private void setOriginal(Knapsack original) {
-		this.original = original;
-	}
 }
