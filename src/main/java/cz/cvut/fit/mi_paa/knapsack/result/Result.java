@@ -39,6 +39,8 @@ abstract public class Result {
 		sb.append("[");
 		sb.append("value: ");
 		sb.append(getValue());
+		sb.append(", ");
+		sb.append(getItems());
 		sb.append("]]");
 		return sb.toString();
 	}

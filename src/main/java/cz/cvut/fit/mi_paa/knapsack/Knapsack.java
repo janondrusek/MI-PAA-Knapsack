@@ -8,7 +8,11 @@ public final class Knapsack implements Cloneable {
 
 	private int limit;
 
+	private int maxValue;
+
 	private int maxWeight;
+
+	private int sumValues;
 
 	private int numOfItems;
 
@@ -68,6 +72,26 @@ public final class Knapsack implements Cloneable {
 			}
 		}
 		return weight;
+	}
+
+	public int getMaxValue() {
+		if (maxValue == 0) {
+			for (Item item : getItems()) {
+				if (item.getValue() > maxValue) {
+					maxValue = item.getValue();
+				}
+			}
+		}
+		return maxValue;
+	}
+
+	public int getSumValues() {
+		if (sumValues == 0) {
+			for (Item item : getItems()) {
+				sumValues += item.getValue();
+			}
+		}
+		return sumValues;
 	}
 
 	public Item[] getItems() {

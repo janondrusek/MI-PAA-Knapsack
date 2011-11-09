@@ -9,10 +9,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.ClassUtils;
 
-import cz.cvut.fit.mi_paa.knapsack.resolver.BranchAndBoundResolver;
-import cz.cvut.fit.mi_paa.knapsack.resolver.BruteForceResolver;
 import cz.cvut.fit.mi_paa.knapsack.resolver.DynamicProgrammingCapacityResolver;
-import cz.cvut.fit.mi_paa.knapsack.resolver.FPTASResolver;
+import cz.cvut.fit.mi_paa.knapsack.resolver.DynamicProgrammingPriceResolver;
 import cz.cvut.fit.mi_paa.knapsack.resolver.Resolver;
 import cz.cvut.fit.mi_paa.knapsack.result.Result;
 
@@ -44,18 +42,36 @@ public class KnapsackRunner {
 			knapsacks.add(knapsack);
 		}
 
-		Resolver[] resolvers = new Resolver[] { new BruteForceResolver(), new BranchAndBoundResolver(),
-				new DynamicProgrammingCapacityResolver(), new FPTASResolver() };
+		Resolver[] resolvers = new Resolver[] { new DynamicProgrammingCapacityResolver(),
+				new DynamicProgrammingPriceResolver() };
 		for (Resolver resolver : resolvers) {
 			long startCpu = getCpuTime();
 			long startTimestamp = System.currentTimeMillis();
 			for (int i = numOfRepeats; i > 0; i--) {
 				for (Knapsack knapsack : knapsacks) {
 					Result result = resolver.solve(knapsack);
-					// System.out.println(result);
+					System.out.println(result);
 				}
 			}
+
 			printTimeInfo(ClassUtils.getShortClassName(resolver.getClass()), startCpu, startTimestamp, numOfRepeats);
+		}
+
+		double[] deviationSums = new double[3];
+		for (Knapsack knapsack : knapsacks) {
+			int maxWeight = 0;
+			for (Item item : knapsack.getItems()) {
+				if (item.getWeight() > maxWeight) {
+					maxWeight = item.getWeight();
+				}
+			}
+			for (int i = 0; i < deviationSums.length; i++) {
+				deviationSums[i] += knapsack.getNumOfItems() * Math.pow(2, i + 1) / maxWeight;
+			}
+		}
+
+		for (int i = 0; i < deviationSums.length; i++) {
+			System.out.printf("%.2f%n", deviationSums[i] / knapsacks.size());
 		}
 
 	}

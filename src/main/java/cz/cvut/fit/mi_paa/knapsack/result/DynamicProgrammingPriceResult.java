@@ -3,9 +3,9 @@ package cz.cvut.fit.mi_paa.knapsack.result;
 import cz.cvut.fit.mi_paa.knapsack.Item;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 
-public class DynamicProgrammingCapacityResult extends Result {
+public class DynamicProgrammingPriceResult extends Result {
 
-	public DynamicProgrammingCapacityResult(Knapsack knapsack) {
+	public DynamicProgrammingPriceResult(Knapsack knapsack) {
 		super(knapsack);
 	}
 
