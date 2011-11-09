@@ -2,6 +2,7 @@ package cz.cvut.fit.mi_paa.knapsack.result;
 
 import org.apache.commons.lang3.ClassUtils;
 
+import cz.cvut.fit.mi_paa.knapsack.Item;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 
 abstract public class Result {
@@ -11,7 +12,6 @@ abstract public class Result {
 	private int value;
 
 	protected Result(Knapsack knapsack) {
-		super();
 		this.knapsack = knapsack;
 	}
 
@@ -27,7 +27,19 @@ abstract public class Result {
 		return knapsack;
 	}
 
-	abstract public String getItems();
+	public String getItems() {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("[");
+		for (Item item : getKnapsack().getItems()) {
+			sb.append(item.isUsed() ? "1" : "0");
+			sb.append(" ");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append("]");
+
+		return sb.toString();
+	}
 
 	@Override
 	public String toString() {

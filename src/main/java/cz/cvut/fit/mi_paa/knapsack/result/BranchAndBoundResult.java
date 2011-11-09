@@ -12,11 +12,6 @@ public class BranchAndBoundResult extends Result {
 		super(knapsack);
 	}
 
-	@Override
-	public String getItems() {
-		return null;
-	}
-
 	public void incrementNumOfChecks() {
 		numOfChecks++;
 	}

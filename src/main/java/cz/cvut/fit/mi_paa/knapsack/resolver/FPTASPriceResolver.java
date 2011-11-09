@@ -2,12 +2,12 @@ package cz.cvut.fit.mi_paa.knapsack.resolver;
 
 import cz.cvut.fit.mi_paa.knapsack.Item;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
-import cz.cvut.fit.mi_paa.knapsack.result.FPTASCapacityResult;
+import cz.cvut.fit.mi_paa.knapsack.result.FPTASPriceResult;
 import cz.cvut.fit.mi_paa.knapsack.result.Result;
 
-public class FPTASCapacityResolver extends FPTASResolver {
+public class FPTASPriceResolver extends FPTASResolver {
 
-	public FPTASCapacityResolver(int numOfLsbToShift) {
+	public FPTASPriceResolver(int numOfLsbToShift) {
 		super(numOfLsbToShift);
 	}
 
@@ -16,10 +16,10 @@ public class FPTASCapacityResolver extends FPTASResolver {
 		Knapsack clone = knapsack.clone();
 		for (int i = 0; i < clone.getNumOfItems(); i++) {
 			Item item = clone.getItems()[i];
-			clone.getItems()[i] = new Item(item.getIndex(), item.getWeight() >> getNumOfLsbToShift(), item.getValue());
+			clone.getItems()[i] = new Item(item.getIndex(), item.getWeight(), item.getValue() >> getNumOfLsbToShift());
 		}
 
-		Resolver resolver = new DynamicProgrammingCapacityResolver();
-		return new FPTASCapacityResult(resolver.solve(clone));
+		Resolver resolver = new DynamicProgrammingPriceResolver();
+		return new FPTASPriceResult(resolver.solve(clone));
 	}
 }
