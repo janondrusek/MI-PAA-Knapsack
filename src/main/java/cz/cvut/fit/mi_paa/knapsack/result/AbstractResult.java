@@ -5,13 +5,13 @@ import org.apache.commons.lang3.ClassUtils;
 import cz.cvut.fit.mi_paa.knapsack.Item;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 
-abstract public class Result {
+abstract public class AbstractResult {
 
 	private Knapsack knapsack;
 
 	private int value;
 
-	protected Result(Knapsack knapsack) {
+	protected AbstractResult(Knapsack knapsack) {
 		this.knapsack = knapsack;
 	}
 
@@ -23,7 +23,7 @@ abstract public class Result {
 		this.value = value;
 	}
 
-	protected Knapsack getKnapsack() {
+	public Knapsack getKnapsack() {
 		return knapsack;
 	}
 

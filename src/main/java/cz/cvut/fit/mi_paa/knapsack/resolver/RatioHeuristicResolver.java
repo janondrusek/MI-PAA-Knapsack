@@ -1,6 +1,7 @@
 package cz.cvut.fit.mi_paa.knapsack.resolver;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -8,7 +9,9 @@ import cz.cvut.fit.mi_paa.knapsack.Item;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.comparator.RatioComparator;
 import cz.cvut.fit.mi_paa.knapsack.result.RatioHeuristicResult;
-import cz.cvut.fit.mi_paa.knapsack.result.Result;
+import cz.cvut.fit.mi_paa.knapsack.result.AbstractResult;
+import cz.cvut.fit.mi_paa.knapsack.results.RatioHeuristicResults;
+import cz.cvut.fit.mi_paa.knapsack.results.Results;
 
 public class RatioHeuristicResolver extends AbstractResolver {
 
@@ -17,7 +20,12 @@ public class RatioHeuristicResolver extends AbstractResolver {
 	private boolean[] used;
 
 	@Override
-	public Result solve(Knapsack knapsack) {
+	public Results getResults(int numOfRepeats, List<Knapsack> knapsacks) {
+		return new RatioHeuristicResults(numOfRepeats, this, knapsacks);
+	}
+
+	@Override
+	public AbstractResult solve(Knapsack knapsack) {
 		tested = new boolean[knapsack.getNumOfItems()];
 		used = new boolean[knapsack.getNumOfItems()];
 

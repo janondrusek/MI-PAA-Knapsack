@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.lang3.ClassUtils;
-
-import cz.cvut.fit.mi_paa.knapsack.resolver.FPTASPriceResolver;
 import cz.cvut.fit.mi_paa.knapsack.resolver.Resolver;
-import cz.cvut.fit.mi_paa.knapsack.result.Result;
+import cz.cvut.fit.mi_paa.knapsack.resolver.SimulatedAnnealingResolver;
+import cz.cvut.fit.mi_paa.knapsack.results.Results;
 
 public class KnapsackRunner {
 
@@ -21,12 +19,7 @@ public class KnapsackRunner {
 		long startCpu = getCpuTime();
 		long startTimestamp = System.currentTimeMillis();
 		try {
-			String[] files = { "src/main/resources/knap_4.inst.dat", "src/main/resources/knap_10.inst.dat",
-					"src/main/resources/knap_15.inst.dat", "src/main/resources/knap_20.inst.dat",
-					"src/main/resources/knap_22.inst.dat", "src/main/resources/knap_25.inst.dat",
-					"src/main/resources/knap_27.inst.dat", "src/main/resources/knap_30.inst.dat",
-					"src/main/resources/knap_32.inst.dat", "src/main/resources/knap_35.inst.dat",
-					"src/main/resources/knap_37.inst.dat", "src/main/resources/knap_40.inst.dat" };
+			String[] files = { args[0] };
 			for (String file : files) {
 				System.out.println(file);
 				KnapsackReader kr = getKnapsackReader(file);
@@ -52,47 +45,10 @@ public class KnapsackRunner {
 			knapsacks.add(knapsack);
 		}
 
-		Resolver[] resolvers = new Resolver[] { new FPTASPriceResolver(3) };
+		Resolver[] resolvers = new Resolver[] { new SimulatedAnnealingResolver() };
 		for (Resolver resolver : resolvers) {
-			long startCpu = getCpuTime();
-			long startTimestamp = System.currentTimeMillis();
-			for (int i = numOfRepeats; i > 0; i--) {
-				for (Knapsack knapsack : knapsacks) {
-					Result result = resolver.solve(knapsack);
-					// System.out.println(result);
-				}
-			}
-			printTimeInfo(ClassUtils.getShortClassName(resolver.getClass()), startCpu, startTimestamp, numOfRepeats);
-		}
-		// printWeightRelativeDeviations(knapsacks);
-		// printValueRelativeDeviations(knapsacks);
-	}
-
-	private static void printWeightRelativeDeviations(List<Knapsack> knapsacks) {
-		System.out.println("Weight:");
-		double[] deviationSums = new double[3];
-		for (Knapsack knapsack : knapsacks) {
-			for (int i = 0; i < deviationSums.length; i++) {
-				deviationSums[i] += knapsack.getNumOfItems() * Math.pow(2, i + 1) / knapsack.getMaxWeight();
-			}
-		}
-		printRelativeDeviations(deviationSums, knapsacks.size());
-	}
-
-	private static void printValueRelativeDeviations(List<Knapsack> knapsacks) {
-		System.out.println("Value:");
-		double[] deviationSums = new double[3];
-		for (Knapsack knapsack : knapsacks) {
-			for (int i = 0; i < deviationSums.length; i++) {
-				deviationSums[i] += knapsack.getNumOfItems() * Math.pow(2, i + 1) / knapsack.getMaxValue();
-			}
-		}
-		printRelativeDeviations(deviationSums, knapsacks.size());
-	}
-
-	private static void printRelativeDeviations(double[] deviationSums, int size) {
-		for (int i = 0; i < deviationSums.length; i++) {
-			System.out.printf("%.2f%n", deviationSums[i] / size);
+			Results results = resolver.getResults(numOfRepeats, knapsacks);
+			System.out.println(results);
 		}
 	}
 

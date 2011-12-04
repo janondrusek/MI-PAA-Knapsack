@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 
-public class BruteForceResult extends Result {
+public class BruteForceResult extends AbstractResult {
 
 	private int bestSack;
 

@@ -1,11 +1,14 @@
 package cz.cvut.fit.mi_paa.knapsack.resolver;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.result.BranchAndBoundResult;
-import cz.cvut.fit.mi_paa.knapsack.result.Result;
+import cz.cvut.fit.mi_paa.knapsack.result.AbstractResult;
+import cz.cvut.fit.mi_paa.knapsack.results.BranchAndBoundResults;
+import cz.cvut.fit.mi_paa.knapsack.results.Results;
 
 public class BranchAndBoundResolver extends AbstractResolver {
 
@@ -17,7 +20,12 @@ public class BranchAndBoundResolver extends AbstractResolver {
 	private Queue<State> queue;
 
 	@Override
-	public Result solve(Knapsack knapsack) {
+	public Results getResults(int numOfRepeats, List<Knapsack> knapsacks) {
+		return new BranchAndBoundResults(numOfRepeats, this, knapsacks);
+	}
+
+	@Override
+	public AbstractResult solve(Knapsack knapsack) {
 		setOriginal(knapsack);
 		queue = new LinkedList<>();
 

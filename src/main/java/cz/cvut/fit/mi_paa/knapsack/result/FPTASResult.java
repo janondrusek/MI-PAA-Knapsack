@@ -1,8 +1,8 @@
 package cz.cvut.fit.mi_paa.knapsack.result;
 
-public abstract class FPTASResult extends Result {
+public abstract class FPTASResult extends AbstractCountableResult {
 
-	public FPTASResult(Result result) {
+	public FPTASResult(AbstractResult result) {
 		super(result.getKnapsack());
 		setValue(result.getValue());
 	}
