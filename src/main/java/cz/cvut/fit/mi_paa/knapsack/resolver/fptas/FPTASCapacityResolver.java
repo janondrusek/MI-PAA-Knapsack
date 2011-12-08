@@ -6,10 +6,10 @@ import cz.cvut.fit.mi_paa.knapsack.Item;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.resolver.Resolver;
 import cz.cvut.fit.mi_paa.knapsack.resolver.dynamic_programming.DynamicProgrammingCapacityResolver;
-import cz.cvut.fit.mi_paa.knapsack.result.FPTASCapacityResult;
 import cz.cvut.fit.mi_paa.knapsack.result.AbstractResult;
-import cz.cvut.fit.mi_paa.knapsack.results.FPTASCapacityResults;
+import cz.cvut.fit.mi_paa.knapsack.result.fptas.FPTASCapacityResult;
 import cz.cvut.fit.mi_paa.knapsack.results.Results;
+import cz.cvut.fit.mi_paa.knapsack.results.fptas.FPTASCapacityResults;
 
 public class FPTASCapacityResolver extends AbstractFPTASResolver {
 

@@ -4,10 +4,10 @@ import java.util.List;
 
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.resolver.AbstractResolver;
-import cz.cvut.fit.mi_paa.knapsack.result.DynamicProgrammingPriceResult;
 import cz.cvut.fit.mi_paa.knapsack.result.AbstractResult;
-import cz.cvut.fit.mi_paa.knapsack.results.DynamicProgrammingPriceResults;
+import cz.cvut.fit.mi_paa.knapsack.result.dynamic_programming.DynamicProgrammingPriceResult;
 import cz.cvut.fit.mi_paa.knapsack.results.Results;
+import cz.cvut.fit.mi_paa.knapsack.results.dynamic_programming.DynamicProgrammingPriceResults;
 
 public class DynamicProgrammingPriceResolver extends AbstractResolver {
 

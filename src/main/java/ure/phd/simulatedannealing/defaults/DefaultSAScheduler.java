@@ -52,7 +52,7 @@ public class DefaultSAScheduler implements AnnealingScheduler {
     }
 
     public boolean isMarkovChainLimitReached() {
-        return sameTemperatureIterationCount == 1;
+        return sameTemperatureIterationCount == 100;
     }
 
     public void incrementAcceptanceCount() {

@@ -16,6 +16,10 @@ abstract public class AbstractCountableResult extends AbstractResult {
 		numOfChecks++;
 	}
 
+	public void setNumOfChecks(int numOfChecks) {
+		this.numOfChecks = numOfChecks;
+	}
+
 	public int getNumOfChecks() {
 		return numOfChecks;
 	}

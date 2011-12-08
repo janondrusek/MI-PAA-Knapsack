@@ -14,6 +14,8 @@ import cz.cvut.fit.mi_paa.knapsack.results.SimulatedAnnealingResults;
 
 public class SimulatedAnnealingResolver extends AbstractResolver implements SimulatedAnnealingProblem {
 
+	private SimulatedAnnealingResult result;
+
 	private Random random = new Random();
 	private Knapsack current;
 	private Knapsack next;
@@ -26,15 +28,17 @@ public class SimulatedAnnealingResolver extends AbstractResolver implements Simu
 		setOriginal(knapsack);
 		initTotalNumOfStates();
 		current = getOriginal();
+		result = new SimulatedAnnealingResult(current);
 
-		DefaultSAScheduler scheduler = new DefaultSAScheduler(100D, 0.0001, 0.5);
+		DefaultSAScheduler scheduler = new DefaultSAScheduler(100, 0.0001, 0.995);
 		scheduler.reset();
-		
+
 		SimulatedAnnealingProblemSolver problemSolver = new SimulatedAnnealingProblemSolver(scheduler, this);
 
 		problemSolver.solve();
+		result.setValue(current.getValue());
+		result.setNumOfChecks(scheduler.getIterationCount());
 
-		SimulatedAnnealingResult result = new SimulatedAnnealingResult(current);
 		return result;
 	}
 
@@ -64,7 +68,15 @@ public class SimulatedAnnealingResolver extends AbstractResolver implements Simu
 		numOfStates++;
 		next = current.clone();
 		// randomly add or remove one item from knapsack
-		swapUsed(getRandomInt());
+		swapUsedCheckMaxWeight(getRandomInt());
+	}
+
+	private void swapUsedCheckMaxWeight(int index) {
+		swapUsed(index);
+		if (next.getWeight() > next.getMaxWeight()) {
+			swapUsed(index);
+			swapUsedCheckMaxWeight(getRandomInt());
+		}
 	}
 
 	private void swapUsed(int index) {
@@ -82,7 +94,7 @@ public class SimulatedAnnealingResolver extends AbstractResolver implements Simu
 	}
 
 	private double getCost(Knapsack knapsack) {
-		return knapsack.getSumValues();
+		return knapsack.getSumValues() - knapsack.getValue();
 	}
 
 	@Override

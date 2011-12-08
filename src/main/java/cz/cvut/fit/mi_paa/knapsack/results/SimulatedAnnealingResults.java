@@ -2,11 +2,12 @@ package cz.cvut.fit.mi_paa.knapsack.results;
 
 import java.util.List;
 
+import cz.cvut.fit.mi_paa.knapsack.AverageRelativeDeviationProvider;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.resolver.SimulatedAnnealingResolver;
 import cz.cvut.fit.mi_paa.knapsack.result.SimulatedAnnealingResult;
 
-public class SimulatedAnnealingResults extends AbstractResults<SimulatedAnnealingResult> {
+public class SimulatedAnnealingResults extends AbstractCountableResults<SimulatedAnnealingResult> {
 
 	public SimulatedAnnealingResults(int numOfRepeats, SimulatedAnnealingResolver resolver, List<Knapsack> knapsacks) {
 		super(numOfRepeats, resolver, new SimulatedAnnealingResult[knapsacks.size()], knapsacks);
@@ -17,7 +18,9 @@ public class SimulatedAnnealingResults extends AbstractResults<SimulatedAnnealin
 		StringBuffer sb = new StringBuffer();
 
 		sb.append(super.toString());
-		sb.append("\n");
+		sb.append(" [Average relative deviation: ");
+		sb.append(getAverageRelativeDeviation());
+		sb.append("]\n");
 		for (SimulatedAnnealingResult result : getResults()) {
 			sb.append(result);
 			sb.append("\n");
@@ -25,4 +28,8 @@ public class SimulatedAnnealingResults extends AbstractResults<SimulatedAnnealin
 		return sb.toString();
 	}
 
+	private double getAverageRelativeDeviation() {
+		AverageRelativeDeviationProvider relativeDeviationProvider = new AverageRelativeDeviationProvider(this);
+		return relativeDeviationProvider.getAverageRelativeDeviation();
+	}
 }

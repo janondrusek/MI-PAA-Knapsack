@@ -2,6 +2,7 @@ package cz.cvut.fit.mi_paa.knapsack.results;
 
 import java.util.List;
 
+import cz.cvut.fit.mi_paa.knapsack.AverageRelativeDeviationProvider;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.resolver.Resolver;
 import cz.cvut.fit.mi_paa.knapsack.result.RatioHeuristicResult;
@@ -13,11 +14,8 @@ public class RatioHeuristicResults extends AbstractResults<RatioHeuristicResult>
 	}
 
 	private double getAverageRelativeDeviation() {
-		double relativeDeviationSum = 0;
-		for (RatioHeuristicResult result : getResults()) {
-			relativeDeviationSum += result.getRelativeDeviation();
-		}
-		return relativeDeviationSum / getResults().length;
+		AverageRelativeDeviationProvider relativeDeviationProvider = new AverageRelativeDeviationProvider(this);
+		return relativeDeviationProvider.getAverageRelativeDeviation();
 	}
 
 	@Override

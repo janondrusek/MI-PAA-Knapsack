@@ -6,10 +6,10 @@ import cz.cvut.fit.mi_paa.knapsack.Item;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.resolver.Resolver;
 import cz.cvut.fit.mi_paa.knapsack.resolver.dynamic_programming.DynamicProgrammingPriceResolver;
-import cz.cvut.fit.mi_paa.knapsack.result.FPTASPriceResult;
 import cz.cvut.fit.mi_paa.knapsack.result.AbstractResult;
-import cz.cvut.fit.mi_paa.knapsack.results.FPTASPriceResults;
+import cz.cvut.fit.mi_paa.knapsack.result.fptas.FPTASPriceResult;
 import cz.cvut.fit.mi_paa.knapsack.results.Results;
+import cz.cvut.fit.mi_paa.knapsack.results.fptas.FPTASPriceResults;
 
 public class FPTASPriceResolver extends AbstractFPTASResolver {
 

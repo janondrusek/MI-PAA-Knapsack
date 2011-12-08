@@ -4,10 +4,10 @@ import java.util.List;
 
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
 import cz.cvut.fit.mi_paa.knapsack.resolver.AbstractResolver;
-import cz.cvut.fit.mi_paa.knapsack.result.DynamicProgrammingCapacityResult;
 import cz.cvut.fit.mi_paa.knapsack.result.AbstractResult;
-import cz.cvut.fit.mi_paa.knapsack.results.DynamicProgrammingCapacityResults;
+import cz.cvut.fit.mi_paa.knapsack.result.dynamic_programming.DynamicProgrammingCapacityResult;
 import cz.cvut.fit.mi_paa.knapsack.results.Results;
+import cz.cvut.fit.mi_paa.knapsack.results.dynamic_programming.DynamicProgrammingCapacityResults;
 
 public class DynamicProgrammingCapacityResolver extends AbstractResolver {
 
