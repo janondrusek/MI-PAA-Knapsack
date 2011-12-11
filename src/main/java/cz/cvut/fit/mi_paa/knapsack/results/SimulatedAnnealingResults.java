@@ -18,14 +18,24 @@ public class SimulatedAnnealingResults extends AbstractCountableResults<Simulate
 		StringBuffer sb = new StringBuffer();
 
 		sb.append(super.toString());
-		sb.append(" [Average relative deviation: ");
+		sb.append("[Average relative deviation: ");
 		sb.append(getAverageRelativeDeviation());
+		sb.append(", Average accepted states: ");
+		sb.append(getAverageAcceptedStates());
 		sb.append("]\n");
 		for (SimulatedAnnealingResult result : getResults()) {
 			sb.append(result);
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+
+	private int getAverageAcceptedStates() {
+		int sum = 0;
+		for (SimulatedAnnealingResult result : getResults()) {
+			sum += result.getAcceptedStates();
+		}
+		return sum / size();
 	}
 
 	private double getAverageRelativeDeviation() {

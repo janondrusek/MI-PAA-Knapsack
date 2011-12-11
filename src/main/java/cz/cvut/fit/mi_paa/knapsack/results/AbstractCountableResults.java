@@ -19,7 +19,7 @@ public abstract class AbstractCountableResults<T extends AbstractCountableResult
 			numOfChecks += result.getNumOfChecks();
 		}
 
-		return numOfChecks / getResults().length;
+		return numOfChecks / size();
 	}
 
 	@Override
@@ -30,10 +30,6 @@ public abstract class AbstractCountableResults<T extends AbstractCountableResult
 		sb.append(" [averageNumOfChecks: ");
 		sb.append(getAverageNumOfChecks());
 		sb.append("]\n");
-//		for (T result : getResults()) {
-//			sb.append(result);
-//			sb.append("\n");
-//		}
 
 		return sb.toString();
 	}

@@ -14,6 +14,8 @@ public final class Knapsack implements Cloneable {
 
 	private int sumValues;
 
+	private int sumWeights;
+
 	private int numOfItems;
 
 	private Item[] items;
@@ -92,6 +94,15 @@ public final class Knapsack implements Cloneable {
 			}
 		}
 		return sumValues;
+	}
+
+	public int getSumWeights() {
+		if (sumWeights == 0) {
+			for (Item item : getItems()) {
+				sumWeights += item.getWeight();
+			}
+		}
+		return sumWeights;
 	}
 
 	public Item[] getItems() {

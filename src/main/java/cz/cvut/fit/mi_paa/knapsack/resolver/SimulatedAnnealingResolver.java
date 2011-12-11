@@ -3,7 +3,6 @@ package cz.cvut.fit.mi_paa.knapsack.resolver;
 import java.util.List;
 import java.util.Random;
 
-import ure.phd.simulatedannealing.defaults.DefaultSAScheduler;
 import ure.phd.simulatedannealing.interfaces.SimulatedAnnealingProblem;
 import ure.phd.simulatedannealing.solver.SimulatedAnnealingProblemSolver;
 import cz.cvut.fit.mi_paa.knapsack.Knapsack;
@@ -30,7 +29,8 @@ public class SimulatedAnnealingResolver extends AbstractResolver implements Simu
 		current = getOriginal();
 		result = new SimulatedAnnealingResult(current);
 
-		DefaultSAScheduler scheduler = new DefaultSAScheduler(100, 0.0001, 0.995);
+		SimulatedAnnealingScheduler scheduler = new SimulatedAnnealingScheduler(getInitialTemperature(), 0.0001, 0.1,
+				3);
 		scheduler.reset();
 
 		SimulatedAnnealingProblemSolver problemSolver = new SimulatedAnnealingProblemSolver(scheduler, this);
@@ -38,8 +38,14 @@ public class SimulatedAnnealingResolver extends AbstractResolver implements Simu
 		problemSolver.solve();
 		result.setValue(current.getValue());
 		result.setNumOfChecks(scheduler.getIterationCount());
+		result.setAcceptedStates(scheduler.getAcceptanceCount());
 
 		return result;
+	}
+
+	private double getInitialTemperature() {
+		return (getOriginal().getSumValues() / getOriginal().getItems().length)
+				/ (getOriginal().getSumWeights() / getOriginal().getMaxWeight());
 	}
 
 	private void initTotalNumOfStates() {

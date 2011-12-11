@@ -48,6 +48,10 @@ abstract public class AbstractResults<T extends AbstractResult> implements Resul
 		return results[current++];
 	}
 
+	public void reset() {
+		current = 0;
+	}
+
 	@Override
 	public Iterator<T> iterator() {
 		return this;
